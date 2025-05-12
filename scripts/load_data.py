@@ -1,10 +1,14 @@
+import csv
 import sqlite3
 
-# データベースファイルを作成
-conn = sqlite3.connect("../backend/db/labs.db")
+DB_PATH = "../backend/db/labs.db"
+CSV_PATH = "./labs.csv"
+
+# データベース接続
+conn = sqlite3.connect(DB_PATH)
 cursor = conn.cursor()
 
-# テーブル作成
+# テーブル作成（もしなければ）
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS labs (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -14,18 +18,20 @@ CREATE TABLE IF NOT EXISTS labs (
 )
 """)
 
-# 仮データを登録
-labs = [
-    ("田中太郎", "人工知能", 5),
-    ("鈴木花子", "情報検索", 3),
-    ("佐藤次郎", "データベース", 4)
-]
+# 既存データを消す（リセットしたい場合）
+cursor.execute("DELETE FROM labs")
 
-cursor.executemany("""
-INSERT INTO labs (professor, field, capacity) VALUES (?, ?, ?)
-""", labs)
+# CSVファイルを読み込み
+with open(CSV_PATH, newline='', encoding='utf-8') as csvfile:
+    reader = csv.DictReader(csvfile)
+    for row in reader:
+        cursor.execute(
+            "INSERT INTO labs (professor, field, capacity) VALUES (?, ?, ?)",
+            (row["professor"], row["field"], int(row["capacity"]))
+        )
 
+# 保存して終了
 conn.commit()
 conn.close()
 
-print("✅ データベースを作成して、データを登録しました！")
+print("✅ データベース作成＆データ投入完了！")
