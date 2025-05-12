@@ -11,7 +11,7 @@ function App() {
   const [labs, setLabs] = useState<Lab[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/labs")
+    fetch("http://127.0.0.1:8000/api/labs")
       .then((res) => res.json())
       .then((data) => setLabs(data))
       .catch((err) => console.error(err));
