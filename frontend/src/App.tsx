@@ -20,23 +20,24 @@ function App() {
   return (
     <div style={{ padding: "2rem" }}>
       <h1>研究室一覧</h1>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-        {labs.map((lab) => (
-          <div
-            key={lab.id}
-            style={{
-              border: "1px solid #ccc",
-              borderRadius: "8px",
-              padding: "1rem",
-              width: "200px"
-            }}
-          >
-            <h2>{lab.professor} 研究室</h2>
-            <p>分野: {lab.field}</p>
-            <p>定員: {lab.capacity}人</p>
-          </div>
-        ))}
-      </div>
+      <table style={{ width: "100%", borderCollapse: "collapse" }}>
+        <thead>
+          <tr>
+            <th style={{ border: "1px solid #ccc", padding: "8px" }}>教授名</th>
+            <th style={{ border: "1px solid #ccc", padding: "8px" }}>分野</th>
+            <th style={{ border: "1px solid #ccc", padding: "8px" }}>定員</th>
+          </tr>
+        </thead>
+        <tbody>
+          {labs.map((lab) => (
+            <tr key={lab.id}>
+              <td style={{ border: "1px solid #ccc", padding: "8px" }}>{lab.professor}</td>
+              <td style={{ border: "1px solid #ccc", padding: "8px" }}>{lab.field}</td>
+              <td style={{ border: "1px solid #ccc", padding: "8px" }}>{lab.capacity}人</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
