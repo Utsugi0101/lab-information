@@ -11,7 +11,7 @@ function App() {
   const [labs, setLabs] = useState<Lab[]>([]);
 
   useEffect(() => {
-    fetch("http://160.16.238.196:5000/api/labs")
+    fetch("http://160.16.238.196:8000/api/labs")
       .then((res) => res.json())
       .then((data) => setLabs(data))
       .catch((err) => console.error(err));
