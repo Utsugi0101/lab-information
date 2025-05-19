@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import styles from "./App.module.css";
 
 type Lab = {
   id: number;
@@ -18,22 +19,22 @@ function App() {
   }, []);
 
   return (
-    <div style={{ padding: "2rem" }}>
+    <div className={styles.container}>
       <h1>研究室一覧</h1>
-      <table style={{ width: "100%", borderCollapse: "collapse" }}>
+      <table className={styles.labTable}>
         <thead>
           <tr>
-            <th style={{ border: "1px solid #ccc", padding: "8px" }}>教授名</th>
-            <th style={{ border: "1px solid #ccc", padding: "8px" }}>分野</th>
-            <th style={{ border: "1px solid #ccc", padding: "8px" }}>定員</th>
+            <th>教授名</th>
+            <th>分野</th>
+            <th>定員</th>
           </tr>
         </thead>
         <tbody>
           {labs.map((lab) => (
             <tr key={lab.id}>
-              <td style={{ border: "1px solid #ccc", padding: "8px" }}>{lab.professor}</td>
-              <td style={{ border: "1px solid #ccc", padding: "8px" }}>{lab.field}</td>
-              <td style={{ border: "1px solid #ccc", padding: "8px" }}>{lab.capacity}人</td>
+              <td>{lab.professor}</td>
+              <td>{lab.field}</td>
+              <td>{lab.capacity}人</td>
             </tr>
           ))}
         </tbody>

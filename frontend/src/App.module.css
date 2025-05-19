@@ -1,0 +1,15 @@
+.container {
+  padding: 2rem;
+}
+
+.labTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.labTable th,
+.labTable td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
