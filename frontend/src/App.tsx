@@ -12,8 +12,6 @@ function App() {
 
   // ✅ 環境変数を使う
   const API_URL = import.meta.env.VITE_API_URL;
-;
-
 
   useEffect(() => {
   fetch(`${API_URL}/api/labs`)
