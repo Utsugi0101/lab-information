@@ -35,7 +35,9 @@ function App() {
         <tbody>
           {labs.map((lab) => (
             <tr key={lab.id}>
-              <td>{lab.professor}</td>
+              <td>
+                <a href={`/labs/${lab.id}`}>{lab.professor}</a>
+              </td>
               <td>{lab.field}</td>
               <td>{lab.capacity}人</td>
             </tr>
