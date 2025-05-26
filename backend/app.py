@@ -32,3 +32,18 @@ def get_labs():
         })
 
     return jsonify(labs_list)
+
+@app.route("/api/labs/<int:lab_id>")
+def get_lab(lab_id):
+    conn = get_db_connection()
+    lab = conn.execute("SELECT * FROM labs WHERE id = ?", (lab_id,)).fetchone()
+    conn.close()
+    if lab is None:
+        return jsonify({"error": "Not found"}), 404
+    return jsonify({
+        "id": lab["id"],
+        "professor": lab["professor"],
+        "field": lab["field"],
+        "capacity": lab["capacity"]
+    })
+
