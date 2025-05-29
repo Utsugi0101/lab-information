@@ -12,10 +12,6 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row  # 辞書型で受け取れるように
     return conn
 
-@app.route("/api/hello")
-def hello():
-    return jsonify(message="Hello from Flask!")
-
 @app.route("/api/labs")
 def get_labs():
     conn = get_db_connection()
