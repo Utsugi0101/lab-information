@@ -6,9 +6,8 @@ const Header: React.FC = () => {
       <h1 style={{ margin: 0 }}>klis研究室情報</h1>
       <nav>
         <ul style={{ listStyle: 'none', padding: 0, display: 'flex', gap: '10px' }}>
-          <li><a href="/">Home</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/contact">Contact</a></li>
+          <li><a href="/flow">研究室配属の流れ</a></li>
+          <li><a href="/resource">情報源</a></li>
         </ul>
       </nav>
     </header>
