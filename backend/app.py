@@ -24,8 +24,7 @@ def get_labs():
             "id": lab["id"],
             "professor": lab["professor"],
             "field": lab["field"],
-            "capacity": lab["capacity"],
-            "Affiliation": lab["affiliation"],
+            "capacity": lab["capacity"]
         })
 
     return jsonify(labs_list)
@@ -41,7 +40,6 @@ def get_lab(lab_id):
         "id": lab["id"],
         "professor": lab["professor"],
         "field": lab["field"],
-        "capacity": lab["capacity"],
-        "Affiliation": lab["affiliation"],
+        "capacity": lab["capacity"]
     })
 

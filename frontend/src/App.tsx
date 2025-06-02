@@ -10,10 +10,6 @@ type Lab = {
 
 function App() {
   const [labs, setLabs] = useState<Lab[]>([]);
-  const [professorFilter, setProfessorFilter] = useState("");
-  const [fieldFilter, setFieldFilter] = useState("");
-
-  // ✅ 環境変数を使う
   const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
@@ -23,53 +19,23 @@ function App() {
       .catch((err) => console.error("API fetch error:", err));
   }, [API_URL]);
 
-  // フィルタリング処理
-  const filteredLabs = labs.filter((lab) => {
-    const professorMatch = lab.professor.includes(professorFilter);
-    const fieldMatch = lab.field.includes(fieldFilter);
-    return professorMatch && fieldMatch;
-  });
 
   return (
     <div className={styles.container}>
-      <h1>研究室一覧</h1>
-      <div style={{ marginBottom: '1rem', display: 'flex', gap: '1rem' }}>
-        <input
-          type="text"
-          placeholder="教授名で絞り込み"
-          value={professorFilter}
-          onChange={(e) => setProfessorFilter(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="分野で絞り込み"
-          value={fieldFilter}
-          onChange={(e) => setFieldFilter(e.target.value)}
-        />
-        <select>
-          
-        </select>
+      <h1 className={styles.heading}>研究室一覧</h1>
+      <div className={styles.cardContainer}>
+        {labs.map((lab) => (
+          <div key={lab.id} className={styles.labCard}>
+            <h2>{lab.professor}</h2>
+            <p><strong>分野:</strong> {lab.field}</p>
+            <p><strong>定員:</strong> {lab.capacity}人</p>
+            <div className={styles.labCardContent}></div>
+            <a href={`/labs/${lab.id}`} className={styles.linkButton}>
+              詳細を見る
+            </a>
+          </div>
+        ))}
       </div>
-      <table className={styles.labTable}>
-        <thead>
-          <tr>
-            <th>教授名</th>
-            <th>分野</th>
-            <th>定員</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredLabs.map((lab) => (
-            <tr key={lab.id}>
-              <td>
-                <a href={`/labs/${lab.id}`}>{lab.professor}</a>
-              </td>
-              <td>{lab.field}</td>
-              <td>{lab.capacity}人</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
     </div>
   );
 }
