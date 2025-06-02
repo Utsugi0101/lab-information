@@ -26,11 +26,12 @@ export default function LabDetail() {
   if (!lab) return <p>読み込み中...</p>;
 
   return (
-  <div className={styles.detailCard}>
-    <h1>{lab.professor} 研究室の詳細</h1>
-    <p><strong>分野:</strong> {lab.field}</p>
-    <p><strong>定員:</strong> {lab.capacity}人</p>
-  </div>
-);
+    <div>
+      <h1>{lab.professor} 研究室</h1>
+      <p><strong>分野:</strong> {lab.field}</p>
+      <p><strong>定員:</strong> {lab.capacity}人</p>
+      <h2>2024年度の論文一覧</h2>
 
+    </div>
+  );
 }
