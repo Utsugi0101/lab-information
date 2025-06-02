@@ -2,14 +2,57 @@
   padding: 2rem;
 }
 
-.labTable {
-  width: 100%;
-  border-collapse: collapse;
+.heading {
+  margin-bottom: 24px;
+  font-size: 1.8rem;
+  text-align: center;
 }
 
-.labTable th,
-.labTable td {
-  border: 1px solid #ccc;
-  padding: 8px;
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: left;
+}
+
+.labCard {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 16px;
+  width: 250px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  flex-direction: column; /* 縦並び */
   text-align: left;
+}
+
+.labCardContent {
+  flex-grow: 1; /* 残りスペースを埋める透明の領域 */
+}
+
+.labCard h2 {
+  margin: 0 0 10px;
+  font-size: 1.3rem;
+}
+
+.labCard p {
+  margin: 6px 0;
+}
+
+.linkButton {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 12px;
+  background-color: #4caf50;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.linkButton:hover {
+  background-color: #45a049;
 }

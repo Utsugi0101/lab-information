@@ -10,40 +10,32 @@ type Lab = {
 
 function App() {
   const [labs, setLabs] = useState<Lab[]>([]);
-
-  // ✅ 環境変数を使う
   const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-  fetch(`${API_URL}/api/labs`)
-    .then((res) => res.json())
-    .then((data) => setLabs(data))
-    .catch((err) => console.error("API fetch error:", err));
-}, [API_URL]);
+    fetch(`${API_URL}/api/labs`)
+      .then((res) => res.json())
+      .then((data) => setLabs(data))
+      .catch((err) => console.error("API fetch error:", err));
+  }, [API_URL]);
+
 
   return (
     <div className={styles.container}>
-      <h1>研究室一覧</h1>
-      <table className={styles.labTable}>
-        <thead>
-          <tr>
-            <th>教授名</th>
-            <th>分野</th>
-            <th>定員</th>
-          </tr>
-        </thead>
-        <tbody>
-          {labs.map((lab) => (
-            <tr key={lab.id}>
-              <td>
-                <a href={`/labs/${lab.id}`}>{lab.professor}</a>
-              </td>
-              <td>{lab.field}</td>
-              <td>{lab.capacity}人</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <h1 className={styles.heading}>研究室一覧</h1>
+      <div className={styles.cardContainer}>
+        {labs.map((lab) => (
+          <div key={lab.id} className={styles.labCard}>
+            <h2>{lab.professor}</h2>
+            <p><strong>分野:</strong> {lab.field}</p>
+            <p><strong>定員:</strong> {lab.capacity}人</p>
+            <div className={styles.labCardContent}></div>
+            <a href={`/labs/${lab.id}`} className={styles.linkButton}>
+              詳細を見る
+            </a>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
