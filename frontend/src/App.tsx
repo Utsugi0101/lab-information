@@ -10,20 +10,46 @@ type Lab = {
 
 function App() {
   const [labs, setLabs] = useState<Lab[]>([]);
+  const [professorFilter, setProfessorFilter] = useState("");
+  const [fieldFilter, setFieldFilter] = useState("");
 
   // ✅ 環境変数を使う
   const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-  fetch(`${API_URL}/api/labs`)
-    .then((res) => res.json())
-    .then((data) => setLabs(data))
-    .catch((err) => console.error("API fetch error:", err));
-}, [API_URL]);
+    fetch(`${API_URL}/api/labs`)
+      .then((res) => res.json())
+      .then((data) => setLabs(data))
+      .catch((err) => console.error("API fetch error:", err));
+  }, [API_URL]);
+
+  // フィルタリング処理
+  const filteredLabs = labs.filter((lab) => {
+    const professorMatch = lab.professor.includes(professorFilter);
+    const fieldMatch = lab.field.includes(fieldFilter);
+    return professorMatch && fieldMatch;
+  });
 
   return (
     <div className={styles.container}>
       <h1>研究室一覧</h1>
+      <div style={{ marginBottom: '1rem', display: 'flex', gap: '1rem' }}>
+        <input
+          type="text"
+          placeholder="教授名で絞り込み"
+          value={professorFilter}
+          onChange={(e) => setProfessorFilter(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="分野で絞り込み"
+          value={fieldFilter}
+          onChange={(e) => setFieldFilter(e.target.value)}
+        />
+        <select>
+          
+        </select>
+      </div>
       <table className={styles.labTable}>
         <thead>
           <tr>
@@ -33,7 +59,7 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          {labs.map((lab) => (
+          {filteredLabs.map((lab) => (
             <tr key={lab.id}>
               <td>
                 <a href={`/labs/${lab.id}`}>{lab.professor}</a>
