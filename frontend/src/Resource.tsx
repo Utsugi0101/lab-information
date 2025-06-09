@@ -1,5 +1,3 @@
-import React from "react";
-
 function Resource() {
   return (
     <div style={{ padding: "20px" }}>
