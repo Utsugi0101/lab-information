@@ -17,7 +17,7 @@
   content: "";
   flex: 1;
   height: 0px;
-  border-top: 6px dashed #4caf50; 
+  border-top: 6px dotted #4caf50; 
   margin: 0 20px;
 }
 
@@ -76,5 +76,5 @@
 }
 
 .linkButton:hover {
-  background-color: #af74dc;
+  background-color: #ffcc5e;
 }
