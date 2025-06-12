@@ -7,7 +7,7 @@ function Resource() {
       <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem', lineHeight: '2' }}>
         <li>
           <a href="https://klis.tsukuba.ac.jp/2306.html" target="_blank" rel="noopener noreferrer">
-            教員別卒業研究指導方針（2023年度）
+            教員別卒業研究指導方針（2025年度）
           </a>
         </li>
         <li>
@@ -17,7 +17,7 @@ function Resource() {
         </li>
         <li>
           <a href="https://klis.tsukuba.ac.jp/2367.html" target="_blank" rel="noopener noreferrer">
-            研究室紹介ページ
+            2024年度卒業論文
           </a>
         </li>
       </ul>
