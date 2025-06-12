@@ -8,8 +8,8 @@ type Lab = {
   field: string;
   capacity: number;
   affiliation: string;
-  papers: string;
-  papersURL: string;
+  papers: string;     // 句点区切りのタイトル
+  papersURL: string;  // カンマ区切りのURL
   guidanceURL: string;
 };
 
@@ -28,6 +28,15 @@ export default function LabDetail() {
 
   if (!lab) return <p>読み込み中...</p>;
 
+  // 句点でタイトルを分割（空白や空要素を除外）
+  const paperTitles = lab.papers
+    .split("、")
+    .map((t) => t.trim())
+    .filter((t) => t.length > 0);
+
+  const paperURLs = lab.papersURL
+    .split(/\s*,\s*/); // 空白ありのカンマにも対応
+
   return (
     <div style={{ padding: "1rem" }}>
       <h1>{lab.professor}（{lab.position}）研究室の詳細</h1>
@@ -36,18 +45,18 @@ export default function LabDetail() {
       <p><strong>定員:</strong> {lab.capacity}人</p>
 
       {/* 論文一覧 */}
-      {lab.papers && lab.papersURL && (
+      {paperTitles.length > 0 && paperURLs.length > 0 && (
         <div>
           <strong>関連論文:</strong>
           <ul>
-            {lab.papers.split(",").map((title, i) => (
+            {paperTitles.map((title, i) => (
               <li key={i}>
                 <a
-                  href={lab.papersURL.split(",")[i]}
+                  href={paperURLs[i] ?? "#"}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {title.trim()}
+                  {title}
                 </a>
               </li>
             ))}

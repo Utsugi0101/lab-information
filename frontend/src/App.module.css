@@ -78,3 +78,7 @@
 .linkButton:hover {
   background-color: #ffcc5e;
 }
+
+.filterContainer {
+  margin-bottom: 1rem;
+}
