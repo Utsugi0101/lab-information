@@ -4,8 +4,9 @@ import styles from "./App.module.css";
 type Lab = {
   id: number;
   professor: string;
+  position: string;
   field: string;
-  capacity: number;
+  affiliation: string;
 };
 
 function App() {
@@ -15,10 +16,20 @@ function App() {
   useEffect(() => {
     fetch(`${API_URL}/api/labs`)
       .then((res) => res.json())
-      .then((data) => setLabs(data))
+      .then((data) =>
+        // 必要な情報だけ抽出
+        setLabs(
+          data.map((lab: any) => ({
+            id: lab.id,
+            professor: lab.professor,
+            position: lab.position,
+            field: lab.field,
+            affiliation: lab.affiliation,
+          }))
+        )
+      )
       .catch((err) => console.error("API fetch error:", err));
   }, [API_URL]);
-
 
   return (
     <div className={styles.container}>
@@ -26,10 +37,10 @@ function App() {
       <div className={styles.cardContainer}>
         {labs.map((lab) => (
           <div key={lab.id} className={styles.labCard}>
-            <h2>{lab.professor}</h2>
+            <h2>{lab.professor}（{lab.position}）</h2>
+            <p><strong>主専攻:</strong> {lab.affiliation}</p>
             <p><strong>分野:</strong> {lab.field}</p>
-            <p><strong>定員:</strong> {lab.capacity}人</p>
-            <div className={styles.labCardContent}></div>
+
             <a href={`/labs/${lab.id}`} className={styles.linkButton}>
               詳細を見る
             </a>
