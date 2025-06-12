@@ -5,41 +5,58 @@ import sqlite3
 app = Flask(__name__)
 CORS(app)
 
-DB_PATH = "db/labs.db"  # データベースファイルのパス
+DB_PATH = "db/labs.db"  # SQLiteデータベースのパス
 
 def get_db_connection():
     conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row  # 辞書型で受け取れるように
+    conn.row_factory = sqlite3.Row  # Rowをdictのように扱う
     return conn
 
-@app.route("/api/labs")
+# すべての研究室情報を取得
+@app.route("/api/labs", methods=["GET"])
 def get_labs():
     conn = get_db_connection()
     labs = conn.execute("SELECT * FROM labs").fetchall()
     conn.close()
 
-    labs_list = []
-    for lab in labs:
-        labs_list.append({
+    result = [
+        {
             "id": lab["id"],
             "professor": lab["professor"],
+            "position": lab["position"],
             "field": lab["field"],
-            "capacity": lab["capacity"]
-        })
+            "capacity": lab["capacity"],
+            "affiliation": lab["affiliation"],
+            "papers": lab["papers"],
+            "papersURL": lab["papersURL"],
+            "guidanceURL": lab["guidanceURL"]
+        }
+        for lab in labs
+    ]
+    return jsonify(result)
 
-    return jsonify(labs_list)
-
-@app.route("/api/labs/<int:lab_id>")
-def get_lab(lab_id):
+# 特定のIDの研究室情報を取得
+@app.route("/api/labs/<int:lab_id>", methods=["GET"])
+def get_lab_by_id(lab_id):
     conn = get_db_connection()
     lab = conn.execute("SELECT * FROM labs WHERE id = ?", (lab_id,)).fetchone()
     conn.close()
+
     if lab is None:
-        return jsonify({"error": "Not found"}), 404
-    return jsonify({
+        return jsonify({"error": "Lab not found"}), 404
+
+    result = {
         "id": lab["id"],
         "professor": lab["professor"],
+        "position": lab["position"],
         "field": lab["field"],
-        "capacity": lab["capacity"]
-    })
+        "capacity": lab["capacity"],
+        "affiliation": lab["affiliation"],
+        "papers": lab["papers"],
+        "papersURL": lab["papersURL"],
+        "guidanceURL": lab["guidanceURL"]
+    }
+    return jsonify(result)
 
+if __name__ == "__main__":
+    app.run(debug=True)
