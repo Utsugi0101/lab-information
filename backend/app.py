@@ -2,26 +2,20 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import sqlite3
 import json
-from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
+import os
 
 app = Flask(__name__)
 CORS(app)
 
-DB_PATH = "db/labs.db"  # SQLiteデータベースのパス
-DESCRIPTION_JSON = "./recommend/description/labs_with_descriptions.json"  # 生成した紹介文付きJSON
+DB_PATH = "db/labs.db"
+DESCRIPTION_JSON = "./recommend/description/labs_with_descriptions.json"
 
-# =====================
-# 推薦エンジンの初期化
-# =====================
-model = SentenceTransformer('sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2')
-
-with open(DESCRIPTION_JSON, encoding="utf-8") as f:
-    labs_with_descriptions = json.load(f)
-
-description_texts = [lab["description"] for lab in labs_with_descriptions]
-description_embeddings = model.encode(description_texts)
+# グローバルキャッシュ
+model = None
+labs_with_descriptions = None
+description_embeddings = None
 
 # =====================
 # SQLite接続
@@ -30,6 +24,21 @@ def get_db_connection():
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
+
+# =====================
+# モデルと埋め込みの初期化
+# =====================
+def initialize_model():
+    global model, labs_with_descriptions, description_embeddings
+    if model is None:
+        from sentence_transformers import SentenceTransformer
+        model = SentenceTransformer('sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2')
+    if labs_with_descriptions is None:
+        with open(DESCRIPTION_JSON, encoding="utf-8") as f:
+            labs_with_descriptions = json.load(f)
+    if description_embeddings is None:
+        description_texts = [lab["description"] for lab in labs_with_descriptions]
+        description_embeddings = model.encode(description_texts)
 
 # =====================
 # 研究室一覧取得
@@ -86,6 +95,8 @@ def get_lab_by_id(lab_id):
 # =====================
 @app.route("/api/recommend", methods=["POST"])
 def recommend():
+    initialize_model()  # モデルと埋め込みを遅延ロード
+
     data = request.get_json()
     query = data.get("query", "").strip()
 
@@ -110,7 +121,7 @@ def recommend():
     return jsonify({"recommendations": recommendations})
 
 # =====================
-# テストページルート
+# テストページ
 # =====================
 @app.route("/")
 def index():
