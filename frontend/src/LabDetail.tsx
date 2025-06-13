@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import styles from "./LabDetail.module.css";
+
 
 type Lab = {
   id: number;
@@ -24,10 +26,11 @@ export default function LabDetail() {
   if (!lab) return <p>読み込み中...</p>;
 
   return (
-    <div>
-      <h1>{lab.professor} 研究室の詳細</h1>
-      <p><strong>分野:</strong> {lab.field}</p>
-      <p><strong>定員:</strong> {lab.capacity}人</p>
-    </div>
-  );
+  <div className={styles.detailCard}>
+    <h1>{lab.professor} 研究室の詳細</h1>
+    <p><strong>分野:</strong> {lab.field}</p>
+    <p><strong>定員:</strong> {lab.capacity}人</p>
+  </div>
+);
+
 }
