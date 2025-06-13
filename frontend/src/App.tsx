@@ -85,7 +85,7 @@ function App() {
       <h1 className={styles.heading}>研究室一覧</h1>
 
       <div className={styles.recommendBox}>
-        <h2>研究室を推薦してもらう</h2>
+        <h2>研究室推薦</h2>
         <textarea
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -95,7 +95,7 @@ function App() {
         />
         <div>
           <button onClick={handleRecommend} disabled={loading}>
-            {loading ? "検索中..." : "推薦を受ける"}
+            {loading ? "検索中..." : "推薦"}
           </button>
           {recommendations && (
             <button onClick={handleReset} style={{ marginLeft: "1rem" }}>
