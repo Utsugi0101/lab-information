@@ -16,7 +16,6 @@ DESCRIPTION_JSON = "./recommend/description/labs_with_descriptions.json"
 model = None
 labs_with_descriptions = None
 description_embeddings = None
->>>>>>> origin/main
 
 # =====================
 # SQLite接続
@@ -42,7 +41,6 @@ def initialize_model():
         description_embeddings = model.encode(description_texts)
 
 # =====================
->>>>>>> origin/main
 # 研究室一覧取得
 # =====================
 @app.route("/api/labs", methods=["GET"])
