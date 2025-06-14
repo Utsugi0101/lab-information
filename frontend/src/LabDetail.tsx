@@ -40,6 +40,7 @@ export default function LabDetail() {
     .split(/\s*,\s*/); // 空白ありのカンマにも対応
 
   return (
+
   <div className={styles.detailCard}> {/* ここを修正 */}
     <h1>{lab.professor}（{lab.position}）研究室の詳細</h1>
     <p><strong>主専攻:</strong> {lab.affiliation}</p>
@@ -85,4 +86,5 @@ export default function LabDetail() {
     </p>
   </div>
 );
+
 }
