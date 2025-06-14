@@ -14,11 +14,6 @@ type Recommendation = {
   score: number;
 };
 
-type Recommendation = {
-  professor: string;
-  score: number;
-};
-
 function App() {
   const [labs, setLabs] = useState<Lab[]>([]);
   const [selectedAffiliation, setSelectedAffiliation] = useState<string>("すべて");
