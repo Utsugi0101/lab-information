@@ -18,7 +18,7 @@ function App() {
   const [labs, setLabs] = useState<Lab[]>([]);
   const [selectedAffiliation, setSelectedAffiliation] = useState<string>("すべて");
   const [query, setQuery] = useState("");
-  const [recommendations, setRecommendations] = useState<Recommendation[] | null>(null); // null なら通常一覧表示
+  const [recommendations, setRecommendations] = useState<Recommendation[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -76,10 +76,9 @@ function App() {
     setError("");
   };
 
-  // 推薦結果から対応する研究室情報を取得
   const recommendedLabIds = recommendations?.map((rec) => rec.professor);
   const recommendedLabs = labs.filter((lab) => recommendedLabIds?.includes(lab.professor));
-
+  
   return (
     <div className={styles.container}>
       <h1 className={styles.heading}>研究室一覧</h1>
@@ -151,9 +150,51 @@ function App() {
           </div>
         ))}
       </div>
-    </div>
-  );
-}
+  // フィルタリング処理
+  const filteredLabs = labs.filter((lab) => {
+    const professorMatch = lab.professor.includes(professorFilter);
+    const fieldMatch = lab.field.includes(fieldFilter);
+    return professorMatch && fieldMatch;
+  });
+
+  const affiliations = Array.from(new Set(labs.map((lab) => lab.affiliation)));
+
+  const filteredLabs =
+    selectedAffiliation === "すべて"
+      ? labs
+      : labs.filter((lab) => lab.affiliation === selectedAffiliation);
+
+  const handleRecommend = async () => {
+    if (!query.trim()) return;
+    setLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch(`${API_URL}/api/recommend`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query }),
+      });
+
+      if (!res.ok) throw new Error("API Error");
+      const data = await res.json();
+      setRecommendations(data.recommendations);
+    } catch (err) {
+      setError("推薦APIの通信に失敗しました");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleReset = () => {
+    setRecommendations(null);
+    setQuery("");
+    setError("");
+  };
+
+  // 推薦結果から対応する研究室情報を取得
+  const recommendedLabIds = recommendations?.map((rec) => rec.professor);
+  const recommendedLabs = labs.filter((lab) => recommendedLabIds?.includes(lab.professor));
 
 
 export default App;
