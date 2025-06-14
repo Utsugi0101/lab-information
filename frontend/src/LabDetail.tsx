@@ -1,5 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import styles from "./LabDetail.module.css"; // スタイルを追加
+
 
 type Lab = {
   id: number;
@@ -38,49 +40,49 @@ export default function LabDetail() {
     .split(/\s*,\s*/); // 空白ありのカンマにも対応
 
   return (
-    <div style={{ padding: "1rem" }}>
-      <h1>{lab.professor}（{lab.position}）研究室の詳細</h1>
-      <p><strong>主専攻:</strong> {lab.affiliation}</p>
-      <p><strong>分野:</strong> {lab.field}</p>
-      <p><strong>定員:</strong> {lab.capacity}人</p>
+  <div className={styles.detailCard}> {/* ここを修正 */}
+    <h1>{lab.professor}（{lab.position}）研究室の詳細</h1>
+    <p><strong>主専攻:</strong> {lab.affiliation}</p>
+    <p><strong>分野:</strong> {lab.field}</p>
+    <p><strong>定員:</strong> {lab.capacity}人</p>
 
-      {/* 論文一覧 */}
-      {paperTitles.length > 0 && paperURLs.length > 0 && (
-        <div>
-          <strong>関連論文:</strong>
-          <ul>
-            {paperTitles.map((title, i) => (
-              <li key={i}>
-                <a
-                  href={paperURLs[i] ?? "#"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+    {/* 論文一覧 */}
+    {paperTitles.length > 0 && paperURLs.length > 0 && (
+      <div>
+        <strong>関連論文:</strong>
+        <ul>
+          {paperTitles.map((title, i) => (
+            <li key={i}>
+              <a
+                href={paperURLs[i] ?? "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
 
-      {/* ガイダンス資料 */}
-      {lab.guidanceURL && (
-        <p>
-          <a
-            href={lab.guidanceURL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            2025年度卒業指導方針
-          </a>
-        </p>
-      )}
-
-      {/* 戻る */}
+    {/* ガイダンス資料 */}
+    {lab.guidanceURL && (
       <p>
-        <Link to="/">← 一覧に戻る</Link>
+        <a
+          href={lab.guidanceURL}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          2025年度卒業指導方針
+        </a>
       </p>
-    </div>
-  );
+    )}
+
+    {/* 戻る */}
+    <p>
+      <Link to="/">← 一覧に戻る</Link>
+    </p>
+  </div>
+);
 }
