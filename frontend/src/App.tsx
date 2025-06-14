@@ -23,7 +23,7 @@ function App() {
   const [labs, setLabs] = useState<Lab[]>([]);
   const [selectedAffiliation, setSelectedAffiliation] = useState<string>("すべて");
   const [query, setQuery] = useState("");
-  const [recommendations, setRecommendations] = useState<Recommendation[] | null>(null); // null なら通常一覧表示
+  const [recommendations, setRecommendations] = useState<Recommendation[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -81,7 +81,6 @@ function App() {
     setError("");
   };
 
-  // 推薦結果から対応する研究室情報を取得
   const recommendedLabIds = recommendations?.map((rec) => rec.professor);
   const recommendedLabs = labs.filter((lab) => recommendedLabIds?.includes(lab.professor));
 
@@ -91,7 +90,7 @@ function App() {
       <h1 className={styles.heading}>研究室一覧</h1>
 
       <div className={styles.recommendBox}>
-        <h2>研究室推薦</h2>
+        <h2>研究室を推薦してもらう</h2>
         <textarea
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -101,7 +100,7 @@ function App() {
         />
         <div>
           <button onClick={handleRecommend} disabled={loading}>
-            {loading ? "検索中..." : "推薦"}
+            {loading ? "検索中..." : "推薦を受ける"}
           </button>
           {recommendations && (
             <button onClick={handleReset} style={{ marginLeft: "1rem" }}>
