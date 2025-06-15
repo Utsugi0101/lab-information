@@ -98,10 +98,12 @@ export default function LabDetail() {
       </p>
     )}
 
-    {/* 戻る */}
-    <p>
-      <Link to="/">← 一覧に戻る</Link>
-    </p>
+    {/* 戻るボタン */}
+    <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+      <Link to="/" className={styles.backButton}>
+        ← 一覧に戻る
+      </Link>
+    </div>
   </div>
 );
 }
