@@ -39,17 +39,36 @@ export default function LabDetail() {
   const paperURLs = lab.papersURL
     .split(/\s*,\s*/); // 空白ありのカンマにも対応
 
+  // 主専攻・協力専攻ごとの定員を表示するロジック
+  const capacityInfo: { [key: string]: string } = {
+    '知識情報システム': '3人',
+    '知識科学': '3人',
+    '情報資源経営': '3人',
+    '知識情報システム(協)': '0~2人',
+    '知識科学(協)': '0~2人',
+    '情報資源経営(協)': '0~2人',
+  };
+
+  // 主専攻・協力専攻を配列で取得
+  const affiliations = lab.affiliation.split('、').map(a => a.trim()).filter(a => a.length > 0);
+
   return (
   <div className={styles.detailCard}> {/* ここを修正 */}
     <h1>{lab.professor}（{lab.position}）研究室の詳細</h1>
     <p><strong>主専攻:</strong> {lab.affiliation}</p>
     <p><strong>分野:</strong> {lab.field}</p>
-    <p><strong>定員:</strong> {lab.capacity}人</p>
+    <p><strong>定員:</strong><br />
+      {affiliations.map((aff, i) => (
+        <span key={i}>
+          {aff}: {capacityInfo[aff] ?? '-'}<br />
+        </span>
+      ))}
+    </p>
 
     {/* 論文一覧 */}
     {paperTitles.length > 0 && paperURLs.length > 0 && (
       <div>
-        <strong>関連論文:</strong>
+        <strong>2024年度卒業論文:</strong>
         <ul>
           {paperTitles.map((title, i) => (
             <li key={i}>

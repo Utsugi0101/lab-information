@@ -28,6 +28,7 @@
   flex-wrap: wrap;
   gap: 20px;
   justify-content: center;
+  align-items: stretch; /* 追加: 高さ揃え */
 }
 
 .labCard {
@@ -35,7 +36,8 @@
   border: 1px solid #ddd;
   border-radius: 12px;
   padding: 16px;
-  width: 250px;
+  width: 260px;
+  min-height: 320px; /* 追加: 高さを揃える */
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
 
   display: flex;
@@ -64,8 +66,8 @@
 }
 
 .linkButton {
-  display: inline-block;
-  margin-top: 12px;
+  display: block; /* 変更: ボタンを下部に固定 */
+  margin-top: auto; /* 追加: 下部に寄せる */
   padding: 8px 12px;
   background-color: #4caf50;
   color: white;
@@ -73,12 +75,142 @@
   border-radius: 6px;
   font-size: 0.9rem;
   transition: background-color 0.3s;
+  text-align: center;
 }
 
 .linkButton:hover {
   background-color: #ffcc5e;
 }
 
+.topControls {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.recommendBox, .filterContainer {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.08);
+  padding: 1.5rem 1.2rem;
+  width: 100%;
+  max-width: 900px;
+  min-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.recommendTitle {
+  color: #388e3c;
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin-bottom: 0.5rem;
+}
+
+.recommendTextarea {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #b2dfdb;
+  padding: 8px;
+  font-size: 1rem;
+  resize: vertical;
+  margin-bottom: 0.5rem;
+  background: #fff;
+}
+
+.recommendBtnRow {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.recommendButton {
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.recommendButton:disabled {
+  background: #b2dfdb;
+  color: #fff;
+  cursor: not-allowed;
+}
+.recommendReset {
+  background: #eee;
+  color: #333;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.recommendError {
+  color: #d32f2f;
+  margin-top: 8px;
+}
+
+.recommendList {
+  margin-top: 12px;
+  font-size: 1rem;
+  padding-left: 1.2em;
+}
+
 .filterContainer {
-  margin-bottom: 1rem;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0.7rem 1.2rem;
+  box-shadow: 1px 1px 6px rgba(0,0,0,0.06);
+  min-width: 320px;
+  max-width: 600px;
+  flex: 1 1 320px;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.filterLabel {
+  font-weight: 600;
+  color: #666;
+  margin-right: 8px;
+}
+
+.filterSelect {
+  border: 1px solid #cddc39;
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 1rem;
+  background: #fffde7;
+  color: #333;
+  outline: none;
+  font-weight: 500;
+}
+
+@media (max-width: 900px) {
+  .topControls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .recommendBox, .filterContainer {
+    max-width: 100%;
+    min-width: 0;
+    width: 100%;
+  }
 }
