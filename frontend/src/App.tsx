@@ -21,6 +21,7 @@ function App() {
   const [recommendations, setRecommendations] = useState<Recommendation[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showNotice, setShowNotice] = useState(false);
 
   const API_URL = import.meta.env.VITE_API_URL;
 
@@ -88,7 +89,26 @@ function App() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.heading}>研究室一覧</h1>
+      <div style={{ position: 'relative' }}>
+        <h1 className={styles.heading}>研究室一覧</h1>
+        <button
+          className={styles.noticeButton}
+          onClick={() => setShowNotice(true)}
+          aria-label="注意書きを表示"
+        >
+          <span className={styles.noticeIcon}>!</span>
+        </button>
+        {showNotice && (
+          <div className={styles.noticePopup} onClick={() => setShowNotice(false)}>
+            <div className={styles.noticeContent} onClick={e => e.stopPropagation()}>
+              <h3>注意事項</h3>
+              <p>本サイトは、<a href = "https://klis.tsukuba.ac.jp/assets/files/teiin20250223.pdf">2026年度卒業研究指導予定教員一覧</a>に記載されている教員のみを記載しています。<br/>そのため、サバティカル等の理由で卒業研究指導を行わない教員や、直近で着任なさった教員は記載していません。</p>
+              <p>この情報は最新ではない場合があります。必ず公式情報もご確認ください。</p>
+              <button className={styles.noticeClose} onClick={() => setShowNotice(false)}>閉じる</button>
+            </div>
+          </div>
+        )}
+      </div>
 
       <div className={styles.topControls}>
         <div style={{width: '100%', maxWidth: 900, margin: '0 auto'}}>
