@@ -1,9 +1,14 @@
-# lab-infomation
-```mermaid
-flowchart LR
-    subgraph ブラウザ
-        A[React SPA] -- fetch() / axios --> B[/Flask REST API/]
-    end
-    B -- SQLAlchemy --> C[(SQLite DB)]
+# klis研究室サイト
+このリポジトリは筑波大学情報学群知識情報・図書館学類の開講授業である、知識情報システム実習Aで作成した、klis研究室情報サイトのソースコードが入っています。
 
-```
+ありがたいことに授業内で最優秀賞をいただけました。
+
+ReactとFlaskを使って作りました
+
+現状授業で借りたサーバーでしか公開していません。改善と公開のやる気が出たら頑張ります。
+
+チームメンバー
+- @utsugi0101
+- @7412m
+- @ryo-0128
+
